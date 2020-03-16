@@ -6,4 +6,4 @@ h = gets.chomp.to_i
 
 square = 1 / 2.0 * a * h
 
-puts "Площадь треугольника #{square} ед. кв"
+puts "Общая площадь треугольника #{square} ед. кв"
