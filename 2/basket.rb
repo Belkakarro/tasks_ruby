@@ -19,7 +19,7 @@ while name != 'стоп'
 goods.push(name)
 
 puts"Введите цену за единицу товара"
-price = gets.chomp.to_i
+price = gets.chomp.to_f
 prices.push(price)
 
 puts"Введите количество товара"
