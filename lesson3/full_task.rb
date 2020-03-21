@@ -49,7 +49,7 @@ class Train
 
 #not work
   def get_route(route)
-    route.each{|station| puts station}
+    @route.each{|station| puts station}
   end
 
 end
