@@ -9,13 +9,15 @@ class Train
   attr_accessor :station
 
 #Принятие маршрута(запись)  и получение, чтобы вытянуть станции из него
-  attr_accessor :route
+  attr_accessor :route_train
+  attr_reader :route
+  attr_accessor :stations
 
   def initialize(type, number_car)
     @type = type
     @number_car = number_car
     @speed = 0
-    @route
+    @route_train
   end
 
 #поезда набирает скорость, к предыдущей добавляем новую V
@@ -29,7 +31,7 @@ class Train
   end
 
 
-#добавляем 1 вагон
+#добавляем 1 вагон()
   def add_car
     if @speed == 0
       @number_car += 1
@@ -47,11 +49,28 @@ class Train
     end
   end
 
-#not work
   def get_route(route)
-    @route.each{|station| puts station}
+    @route_train = route
+    @station = self.route_train.stations.first
   end
 
+  def show_stations
+      @route_train.stations.each do |station| 
+        puts station
+      end
+  end
+
+  def previous_station
+    @route_train.stations[route_train.stations.index(self.station) - 1]
+  end
+
+  def next_station
+    @route_train.stations[route_train.stations.index(self.station) + 1]
+  end
+
+  def move_next_station
+    self.station = self.route_train.stations[route_train.stations.index(self.station) + 1]
+  end
 end
  
 
@@ -60,6 +79,7 @@ class RailwayStation
 
   attr_accessor :trains
   attr_reader :name
+  attr_accessor :type
 
   def initialize(name)
     @name = name
@@ -74,23 +94,31 @@ class RailwayStation
     @trains.pop
   end
 
-#not work
+
+#do not work
   def trains_by_type(type) 
-    @trains.each do |train|
+    @trains.inject(0) do |result, train|
       if train.type == type
-        puts train
+        result +=1
       end
     end
   end
 
-#not work
+=begin
+  def trains_by_type(type) 
+      self.trains.each do |train|
+        if train.type == type
+          puts train
+        end
+      end
+  end
+=end
+
   def show_trains
     @trains.each do |train| 
-      puts rain
+      puts train
     end
   end
-
-
 end
 
 
@@ -98,24 +126,24 @@ class Route
 
   attr_reader :first_station
   attr_reader :last_station
-  attr_accessor :route
+  attr_accessor :stations
 
   def initialize(first_station, last_station)
     @first_station = first_station
     @last_station = last_station
-    @route = []
-    @route.push(first_station)
-    @route.push(last_station)
+    @stations = []
+    @stations.push(first_station)
+    @stations.push(last_station)
   end
   def add_station(station)
-    @route.insert(-2, station)
+    @stations.insert(-2, station)
   end
 
   def delete_station(station)
-    @route.delete_if{|index| index == station}
+    @stations.delete_if{|index| index == station}
   end
 
   def show_route
-    @route.each{|station| puts station}
+    @stations.each{|station| puts station}
   end
 end
