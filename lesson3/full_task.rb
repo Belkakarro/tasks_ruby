@@ -90,8 +90,8 @@ class RailwayStation
       @trains.push(train)
   end
 
-  def delete_train
-    @trains.pop
+  def delete_train(train)
+    @trains.delete(train)
   end
 
 
@@ -144,6 +144,6 @@ class Route
   end
 
   def show_route
-    @stations.each{|station| puts station}
+    @stations.each{|station| puts station.name}
   end
 end
