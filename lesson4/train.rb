@@ -4,18 +4,18 @@ class Train
   attr_accessor :speed
   attr_accessor :station
   attr_accessor :route
+  attr_accessor :name
 
   #разрешение на чтение свойства и из других классов
   attr_reader :type
 
-  def initialize(number_car)
+  def initialize(name)
+    @name = name
     @type
-    #@number_car = number_car
     @speed = 0
     @route
-    @wagons = (1..number_car).to_a
+    @wagons = []
     @station
-    #@station = self.route.stations.first
   end
 
   def rize_speed(speed)
@@ -32,23 +32,25 @@ class Train
       end
   end
 
-  def add_car(car)
+  def add_wagon(wagon)
       if !train_stopped?
-        puts "Сначала нужно остановить поезд"
-    elsif !car_such_train?(car)
-     puts "Не совместимость типов поезда и вагонов"
-    elsif train_stopped? && car_such_train?(car)
-     add_car!(car)
+        puts MESSAGE_STOPED_TRAIN
+    elsif !wagon_such_train?(wagon)
+     puts MESSAGE_INCOMPATIBILITY_TYPES
+    elsif train_stopped? && wagon_such_train?(wagon)
+     add_wagon!(wagon)
+     SUCCESS_ADD_WAGON
     end
   end
 
-  def delete_car(car)
+  def delete_wagon(wagon)
     if !train_stopped?
-        puts "Сначала нужно остановить поезд"
-    elsif !car_such_train?(car)
-     puts "Не совместимость типов поезда и вагонов"
-    elsif train_stopped? && car_such_train?(car)
-     delete_car!
+        puts MESSAGE_STOPED_TRAIN
+    elsif !wagon_such_train?(wagon)
+     puts MESSAGE_INCOMPATIBILITY_TYPES
+    elsif train_stopped? && wagon_such_train?(wagon)
+     delete_wagon!
+     SUCCESS_DELETE_WAGON
     end
   end 
 
@@ -56,10 +58,6 @@ class Train
     @route = route
     @station = self.route.stations.first
   end
-
-  #def start_station
-  #  @station = self.route.stations.first
-  #end
 
   def move_next_station
     @station = self.route.stations[route.stations.index(self.station) + 1]
@@ -89,15 +87,15 @@ class Train
     @speed.zero?
   end
 
-  def add_car!(car)
-    @wagons.push(car)
+  def add_wagon!(wagon)
+    @wagons.push(wagon)
   end
 
-  def delete_car!
+  def delete_wagon!
     @wagons.pop
   end
 
-  def car_such_train?(car)
+  def wagon_such_train?(wagon)
   end
 
 end
