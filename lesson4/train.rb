@@ -39,7 +39,7 @@ class Train
      puts MESSAGE_INCOMPATIBILITY_TYPES
     elsif train_stopped? && wagon_such_train?(wagon)
      add_wagon!(wagon)
-     SUCCESS_ADD_WAGON
+     puts SUCCESS_ADD_WAGON
     end
   end
 
@@ -50,7 +50,7 @@ class Train
      puts MESSAGE_INCOMPATIBILITY_TYPES
     elsif train_stopped? && wagon_such_train?(wagon)
      delete_wagon!
-     SUCCESS_DELETE_WAGON
+     puts SUCCESS_DELETE_WAGON
     end
   end 
 
