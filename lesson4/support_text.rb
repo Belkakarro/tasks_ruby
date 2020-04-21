@@ -57,11 +57,17 @@ module SupportText
   INPUT_STATION_NAME = "Введите название станции:"
   INPUT_WAGON_NAME = "Введите номер вагона:"
   SELECT_STATION = "Выберте станция, чтобы просмотреть какие есть на ней поезда."
-  EMPTY_VARIABLE = "Вы еще не создали ничего!"
+  #EMPTY_VARIABLE = "Вы еще не создали ничего!"
   SUCCESS_ADD_WAGON = "Вагон успешно добавлен"
   SUCCESS_DELETE_WAGON = "Вагон успешно удален"
   SUCCESS_ADD_TRAIN = "Поезд успешно добавлен на станцию"
   SUCCESS_DELETE_TRAIN = "Поезд успешно добавлен на станцию"
   MESSAGE_STOPED_TRAIN = "Сначала нужно остановить поезд"
   MESSAGE_INCOMPATIBILITY_TYPES = "Не совместимость типов поезда и вагонов"
+  MESSAGE_WAGON_REPEATS = "Номер вагона не уникален, введите другой"
+  MESSAGE_TRAIN_REPEATS = "Такой поезд уже есть введите другое имя"
+  MESSAGE_STATION_REPEATS = "Название станции не уникально, введите другое имя"
+  MESSAGE_NOT_TRAINS = "У вас еще нет поездов на станции"
+  MESSAGE_NOT_STATION = "У вас еще нет станции"
+
 end

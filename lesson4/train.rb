@@ -1,4 +1,6 @@
+require_relative 'support_text'
 class Train
+  include SupportText
 
   #attr_accessor :number_car
   attr_accessor :speed

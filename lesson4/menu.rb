@@ -91,18 +91,22 @@ class Menu
 
   #Работа с меню поездов
   def create_train
-	  puts INPUT_TRAIN_NAME
-	  num = gets.chomp.to_s
+		  puts INPUT_TRAIN_NAME
+		  num = gets.chomp.to_s
 
-    menu_type_train
-    case gets.chomp.to_i
-      when 1 then train = train = PassagerTrain.new(num)
-      when 2 then train = train = CargoTrain.new(num)
-    else
-      mistake_in_menu
-    end
-    @trains << train
-    puts "Поезд #{num} успешно создан"
+	  if train_name_repeat?(num)
+	  	puts MESSAGE_TRAIN_REPEATS
+	  else
+	    menu_type_train
+	    case gets.chomp.to_i
+	      when 1 then train = train = PassagerTrain.new(num)
+	      when 2 then train = train = CargoTrain.new(num)
+	    else
+	      mistake_in_menu
+	    end
+	    @trains << train
+	    puts "Поезд #{num} успешно создан"
+	  end
   end
   
   def add_train_on_station
@@ -118,18 +122,21 @@ class Menu
 
   #Работа с меню вагонов
   def create_wagon
-    puts INPUT_WAGON_NAME
-    number = gets.chomp.to_s
-
-    menu_type_wagon
-    case gets.chomp.to_i
-      when 1 then wagon = PassagerWagon.new(number)
-      when 2 then wagon = CargoWagon.new(number)
+	    puts INPUT_WAGON_NAME
+	    number = gets.chomp.to_s
+    if wagon_name_repeat?(number)
+    	puts MESSAGE_WAGON_REPEATS
     else
-      mistake_in_menu
-    end
-    @wagons << wagon
-    puts "Вагон номер #{number} успешно создан."
+	    menu_type_wagon
+	    case gets.chomp.to_i
+	      when 1 then wagon = PassagerWagon.new(number)
+	      when 2 then wagon = CargoWagon.new(number)
+	    else
+	      mistake_in_menu
+	    end
+	    @wagons << wagon
+	    puts "Вагон номер #{number} успешно создан."
+	  end
   end
 
   def add_wagon_train
@@ -156,30 +163,56 @@ class Menu
 
   #Работа с меню станций
   def create_station
-    puts INPUT_STATION_NAME
-    name = gets.chomp.to_s
-    s = RailwayStation.new(name)
-    @stations.push(s) 
-    puts "Успешно создана станция #{name}"
+	    puts INPUT_STATION_NAME
+	    name = gets.chomp.to_s
+    if station_name_repeat?(name)
+    	puts MESSAGE_STATION_REPEATS
+    else
+	    s = RailwayStation.new(name)
+	    @stations.push(s) 
+	    puts "Успешно создана станция #{name}"
+  	end
   end
 
 #Показываем все созданные станции
   def show_all_stations
-  	if_empty(@stations)
-    @stations.each{|station| puts "Станция: #{station.name}"}
+  	if arr_empty?(@stations)
+  		puts MESSAGE_NOT_STATION
+  	else
+    	@stations.each{|station| puts "Станция: #{station.name}"}
+  	end
   end
 
   def show_trains_on_station
-    puts SELECT_STATION
-    station = select_station
-    puts "На станции  #{station.name} находятся следующие поезда:"
-    station.trains.each{|train| puts "#{train.name}"}
+  	if arr_empty?(@stations)
+  		puts MESSAGE_NOT_STATION
+  	elsif arr_empty?(@trains)
+  		puts MESSAGE_NOT_TRAINS
+  		train_menu
+  	else
+	    puts SELECT_STATION
+	    station = select_station
+	    puts "На станции  #{station.name} находятся следующие поезда:"
+	    station.trains.each{|train| puts "#{train.name}"}
+	  end
   end
 
   private
 
-  def if_empty(arr)
-		puts EMPTY_VARIABLE if arr.empty?
+    def train_name_repeat?(name)
+  	@trains.find{|train| train.name == name}
+  end
+
+  def station_name_repeat?(name)
+  	@stations.find{|station| station.name == name}
+  end
+
+  def wagon_name_repeat?(name)
+  	@wagons.find{|wagon| wagon.name == name}
+  end
+
+  def arr_empty?(arr)
+		 arr.empty?
 	end
 
   def count_wagon_in_train(train)
