@@ -1,13 +1,13 @@
 class CargoTrain < Train
 
-  def initialize(number_car)
+  def initialize(name)
     @type = 'cargo'
     super
   end
 
   protected
-  def car_such_train?(car)
-    car.is_a?(CargoCar)
+  def wagon_such_train?(wagon)
+    wagon.is_a?(CargoWagon)
   end
 
 end
