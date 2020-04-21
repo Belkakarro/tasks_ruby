@@ -10,10 +10,12 @@ class RailwayStation
 
   def add_train(train)
       @trains.push(train)
+      SUCCESS_ADD_TRAIN
   end
 
   def delete_train(train)
     @trains.delete(train)
+    SUCCESS_DELETE_TRAIN
   end
 
   def trains_by_type(type) 
