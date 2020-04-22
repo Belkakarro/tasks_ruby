@@ -80,6 +80,11 @@ class Train
   def size_train
     @wagons.size
   end
+
+  def show_wagons_train
+    @wagons.each_with_index{|wagon, index| puts "#{index} - соответствует вагон № #{wagon.name}"}
+
+  end
 =begin
 Эти методы используются внутри других методов, поэтому прямой доступ к ним не нужен
 =end
