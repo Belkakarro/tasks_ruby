@@ -33,7 +33,7 @@ class Menu
       when 2 then train_menu
       when 0 then abort
     else
-      mistake_in_menu
+      puts MISTAKE_IN_MENU
       show_menu
     end
   end
@@ -49,7 +49,7 @@ class Menu
         when 3 then show_trains_on_station
         when 4 then show_menu
       else
-        mistake_in_menu
+        puts MISTAKE_IN_MENU
         station_menu
       end
     end
@@ -66,7 +66,7 @@ class Menu
         when 3 then add_train_on_station
         when 4 then show_menu
       else
-        mistake_in_menu
+        puts MISTAKE_IN_MENU
         train_menu
       end
     end
@@ -83,30 +83,46 @@ class Menu
         when 3 then delete_wagon_train
         when 4 then train_menu
       else
-        mistake_in_menu
+        puts MISTAKE_IN_MENU
         wagon_menu
       end
     end
   end
 
+  #def abc
+  	#menu_type_train
+		    #case gets.chomp.to_s
+		      #when "1" then train = PassagerTrain.new(num)
+		      #when "2" then train = CargoTrain.new(num)
+		     #end
+  #end
+
   #Работа с меню поездов
   def create_train
 		  puts INPUT_TRAIN_NAME
-		  num = gets.chomp.to_s
+		  name = gets.chomp.to_s
 
-	  if train_name_repeat?(num)
+	  if train_name_repeat?(name)
 	  	puts MESSAGE_TRAIN_REPEATS
+	  elsif name.empty?
+	  	puts NOT_NAME
+	  	create_train
 	  else
-	    menu_type_train
-	    case gets.chomp.to_i
-	      when 1 then train = train = PassagerTrain.new(num)
-	      when 2 then train = train = CargoTrain.new(num)
-	    else
-	      mistake_in_menu
-	    end
-	    @trains << train
-	    puts "Поезд #{num} успешно создан"
-	  end
+		    menu_type_train
+		    answer = gets.chomp.to_s
+		    	if answer.empty?
+				    	puts NOT_SELECT
+			    elsif answer == "1" 
+		      	@trains << PassagerTrain.new(name)
+		      	puts "Поезд #{name} успешно создан"
+		      elsif answer =="2" 
+		      	@trains << CargoTrain.new(name)
+		      	puts "Поезд #{name} успешно создан"
+		      else
+		      	puts "вы ввели фигню"
+		      end
+		end
+		p @trains
   end
   
   def add_train_on_station
@@ -126,39 +142,79 @@ class Menu
 	    number = gets.chomp.to_s
     if wagon_name_repeat?(number)
     	puts MESSAGE_WAGON_REPEATS
+    elsif number.empty?
+    	puts NOT_NAME
+    	create_wagon
     else
-	    menu_type_wagon
-	    case gets.chomp.to_i
-	      when 1 then wagon = PassagerWagon.new(number)
-	      when 2 then wagon = CargoWagon.new(number)
-	    else
-	      mistake_in_menu
-	    end
-	    @wagons << wagon
-	    puts "Вагон номер #{number} успешно создан."
+    	menu_type_train
+  		answer = gets.chomp.to_s
+	    if answer.empty?
+  			puts NOT_SELECT
+	    elsif answer == "1" 
+      	@wagons << PassagerWagon.new(number)
+      	puts "Поезд #{number} успешно создан"
+      elsif answer =="2" 
+      	@wagons << CargoWagon.new(number)
+      	puts "Поезд #{number} успешно создан"
+      else
+      	puts "вы ввели фигню"
+      end
 	  end
+	  p @wagons
   end
 
   def add_wagon_train
-      #Выберите тип поезда
-    train = select_train
-    #Выбираем поезд
-    wagon = select_wagon
+  	if arr_empty?(@trains) && arr_empty?(@wagons)
+  		puts "У вас еще не созданы вагоны и поезда"
+  	elsif arr_empty?(@trains)
+  		puts "У вас еще не созданы поезда"
+  	elsif arr_empty?(@wagons)
+  		puts "У вас еще не созданы вагоны"
+  	else
+  		#Выберите тип поезда
+	    train = select_train
+	    #Выбираем вагон
+	    wagon = select_wagon
 
-    train.add_wagon(wagon)
-    #показываем колличесвто вагон в поезде
-    count_wagon_in_train(train)
+	    train.add_wagon(wagon)
+	    #показываем колличесвто вагон в поезде
+	    count_wagon_in_train(train)
+	   end
   end
 
-  def delete_wagon_train
- 		#Выберите тип поезда
-    train = select_train
-		#Выбираем поезд
-    wagon = select_wagon
+  #def show_list_wagons(train)
+  	##if_empty(train)
+    #train.wagons.each_with_index{|value, index| puts "#{index} - соответствует #{value.name} типа #{value.type_wagon}"}
+  #end
 
-    train.delete_wagon(wagon)
-    #показываем колличесвто вагон в поезде
-    count_wagon_in_train(train)
+  #def select_from_list(arr)
+  #  puts "Введите порядковый номер:"
+  #  number = gets.chomp.to_i
+  #  arr[number]
+  #end
+
+  def delete_wagon_train
+ 		if arr_empty?(@trains) && arr_empty?(@wagons)
+  		puts "У вас еще не созданы вагоны и поезда"
+  	elsif arr_empty?(@trains)
+  		puts "У вас еще не созданы поезда"
+  	elsif arr_empty?(@wagons)
+  		puts "У вас еще не созданы вагоны"
+  	else
+  		#Выберите тип поезда
+	    train = select_train
+	    p train
+	    
+	    #Выбираем вагон
+	    wagons_of_train = train.show_wagons_train
+	    #train.wagons.each_with_index{|wagon, index| puts "#{index} - соответствует #{wagon.name}"}
+	    wagon = select_from_list(wagons_of_train)
+	    
+
+	    train.delete_wagon(wagon)
+	    #показываем колличесвто вагон в поезде
+	    count_wagon_in_train(train)
+	   end
   end
 
   #Работа с меню станций
@@ -225,19 +281,19 @@ class Menu
     arr.each_with_index{|value, index| puts "#{index} - соответствует #{value.name}"}
   end
 
-  def show_list_wagons(arr)
-  	#if_empty(arr)
-    arr.each_with_index{|value, index| puts "#{index} - соответствует #{value.name} типа #{value.type_wagon}"}
-  end
 
   def select_from_list(arr)
     puts "Введите порядковый номер:"
     number = gets.chomp.to_i
-    arr[number]
+	    if number.nil?
+	    	puts "Сделайте выбор"
+	    else
+	    	arr[number]
+	   	end
   end
 
   def show_all_wagons
-  	if_empty(@wagons)
+  	puts "Показываем все вагоны"
     @wagons.each_with_index{|wagon, index| puts "#{index} -соответствует вагону №  #{wagon.name} -  типа #{wagon.type_wagon}"}
   end
 
@@ -256,7 +312,7 @@ class Menu
     @trains.each do|train| 
        arr << train if train.type == type
      end
-     puts "Показываем поезда тип #{type}"
+     puts "Показываем поезда типа #{type}"
      arr #возврат массива уже отсортированного
   end
 
@@ -266,14 +322,14 @@ class Menu
 
   def select_train
     menu_type_train
-      case gets.chomp.to_i
-        when 1 then type = "passager"
-        when 2 then type = "cargo"
-      else
-        mistake_in_menu
-      end
-      sort_train = show_train(sort_train_by_type(type))
-      select_from_list(sort_train)
+	      case gets.chomp.to_i
+	        when 1 then type = "passager"
+	        when 2 then type = "cargo"
+	      else
+	        puts MISTAKE_IN_MENU
+	      end
+	      sort_train = show_train(sort_train_by_type(type))
+      	select_from_list(sort_train)
   end
 end
 

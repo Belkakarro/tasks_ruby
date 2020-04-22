@@ -4,10 +4,6 @@ module SupportText
     puts "----------"
   end
 
-  def mistake_in_menu
-  	puts "Вы ввели не корректные данные. Сделайте выбор:"
-  end
-
   def menu_type_train
   	puts "Выберите тип поезда:"
     puts "1 - пассажирский поезд"
@@ -50,6 +46,7 @@ module SupportText
     puts "4 - подняться в корневое меню"
   end
 
+  MISTAKE_IN_MENU = "Вы ввели не корректные данные. Сделайте выбор:"
   STATIONS_LIST = "Список станций:"
   TRAINS_LIST = "Список поездов:"
   WAGONS_LIST = "Выберите вагон:"
@@ -69,5 +66,7 @@ module SupportText
   MESSAGE_STATION_REPEATS = "Название станции не уникально, введите другое имя"
   MESSAGE_NOT_TRAINS = "У вас еще нет поездов на станции"
   MESSAGE_NOT_STATION = "У вас еще нет станции"
+  NOT_NAME = "Вы не ввели имя, повторите попытку"
+  NOT_SELECT = "Вы не сделали выбор"
 
 end
