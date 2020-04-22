@@ -1,4 +1,6 @@
+require_relative 'support_text'
 class RailwayStation
+  include SupportText
 
   attr_accessor :trains
   attr_reader :name
