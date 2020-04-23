@@ -272,7 +272,14 @@ class Menu
   	#при выборе удаляем элемент(вагон) из общего массива
     puts "Введите порядковый номер:"
     number = gets.chomp.to_i
-	    	arr.delete_at(number)
+	    	arr[number]
+  end
+
+    def select_from_wagon
+  	#при выборе удаляем элемент(вагон) из общего массива
+    puts "Введите порядковый номер:"
+    number = gets.chomp.to_i
+	    	@wagons.delete_at(number)
   end
 
   def show_all_wagons
@@ -282,7 +289,7 @@ class Menu
 
   def select_wagon
       show_all_wagons
-      select_from_list(@wagons)
+      select_from_wagon
   end
 
   def select_station
