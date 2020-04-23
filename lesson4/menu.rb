@@ -269,6 +269,7 @@ class Menu
 
 
   def select_from_list(arr)
+  	#при выборе удаляем элемент(вагон) из общего массива
     puts "Введите порядковый номер:"
     number = gets.chomp.to_i
 	    	arr.delete_at(number)
