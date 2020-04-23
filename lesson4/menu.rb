@@ -160,7 +160,6 @@ class Menu
       	puts "вы ввели фигню"
       end
 	  end
-	  p @wagons
   end
 
   def add_wagon_train
@@ -182,17 +181,6 @@ class Menu
 	   end
   end
 
-  #def show_list_wagons(train)
-  	##if_empty(train)
-    #train.wagons.each_with_index{|value, index| puts "#{index} - соответствует #{value.name} типа #{value.type_wagon}"}
-  #end
-
-  #def select_from_list(arr)
-  #  puts "Введите порядковый номер:"
-  #  number = gets.chomp.to_i
-  #  arr[number]
-  #end
-
   def delete_wagon_train
  		if arr_empty?(@trains) && arr_empty?(@wagons)
   		puts "У вас еще не созданы вагоны и поезда"
@@ -203,7 +191,6 @@ class Menu
   	else
   		#Выберите тип поезда
 	    train = select_train
-	    p train
 	    
 	    #Выбираем вагон
 	    wagons_of_train = train.show_wagons_train
@@ -277,7 +264,6 @@ class Menu
   end
 
   def show_list(arr)
-  	#if_empty(arr)
     arr.each_with_index{|value, index| puts "#{index} - соответствует #{value.name}"}
   end
 
@@ -285,11 +271,7 @@ class Menu
   def select_from_list(arr)
     puts "Введите порядковый номер:"
     number = gets.chomp.to_i
-	    if number.nil?
-	    	puts "Сделайте выбор"
-	    else
-	    	arr[number]
-	   	end
+	    	arr.delete_at(number)
   end
 
   def show_all_wagons
@@ -322,14 +304,19 @@ class Menu
 
   def select_train
     menu_type_train
-	      case gets.chomp.to_i
-	        when 1 then type = "passager"
-	        when 2 then type = "cargo"
-	      else
-	        puts MISTAKE_IN_MENU
-	      end
-	      sort_train = show_train(sort_train_by_type(type))
+    answer = gets.chomp.to_i
+    	if answer.nil?
+    		puts NOT_SELECT
+    	elsif answer == 1 then type = "passager"
+    		sort_train = show_train(sort_train_by_type(type))
       	select_from_list(sort_train)
+      elsif answer == 2 then type = "cargo"
+      	sort_train = show_train(sort_train_by_type(type))
+      	select_from_list(sort_train)
+    	else
+	        puts MISTAKE_IN_MENU
+	        wagon_menu
+	    end
   end
 end
 
