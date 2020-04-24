@@ -160,17 +160,7 @@ class Menu
 		end
 	end
 
-#return new_method_name if @trains.empty? || @wagons.empty?
 
-	def checking_arrs
-		if @trains.empty? && @wagons.empty?
-			puts "У вас еще не созданы вагоны и поезда"
-		elsif @trains.empty?
-			puts "У вас еще не созданы поезда"
-		elsif @wagons.empty?
-			puts "У вас еще не созданы вагоны"
-		end
-	end
 #return checking_arrs if @trains.empty? || @trains.wagons.empty?
 	def add_wagon_train
 		if @trains.empty? || @wagons.empty?
@@ -244,6 +234,18 @@ class Menu
 
 	private
 
+	#return new_method_name if @trains.empty? || @wagons.empty?
+
+	def checking_arrs
+		if @trains.empty? && @wagons.empty?
+			puts "У вас еще не созданы вагоны и поезда"
+		elsif @trains.empty?
+			puts "У вас еще не созданы поезда"
+		elsif @wagons.empty?
+			puts "У вас еще не созданы вагоны"
+		end
+	end
+
 		def train_name_repeat?(name)
 		@trains.find{|train| train.name == name}
 	end
@@ -254,10 +256,6 @@ class Menu
 
 	def wagon_name_repeat?(name)
 		@wagons.find{|wagon| wagon.name == name}
-	end
-
-	def arr_empty?(arr)
-		 arr.empty?
 	end
 
 	def count_wagon_in_train(train)
