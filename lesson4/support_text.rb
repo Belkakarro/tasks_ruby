@@ -66,7 +66,12 @@ module SupportText
 	MESSAGE_STATION_REPEATS = " # Название станции не уникально, введите другое имя"
 	MESSAGE_NOT_TRAINS = " # У вас еще нет поездов на станции"
 	MESSAGE_NOT_STATION = " # У вас еще нет станции"
+	MESSAGE_NOT_MAKE_TRAINS_AND_WAGONS = " #У вас еще не созданы вагоны и поезда"
+	MESSAGE_NOT_MAKE_TRAINS = " #У вас еще не созданы поезда"
+	MESSAGE_NOT_MAKE_WAGONS =  " #У вас еще не созданы вагоны"
 	NOT_NAME = " # Вы не ввели имя, повторите попытку"
 	NOT_SELECT = " # Вы не сделали выбор"
+	NOT_WAGON_AT_TRAIN = " #В поезде нет вагонов"
+
 
 end

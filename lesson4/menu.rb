@@ -177,22 +177,25 @@ class Menu
 		 end
 	end
 
-	def delete_wagon_train
-		if @trains.empty?
-			puts "У вас еще нет созданных поездов"
-		else
-			#Выберите тип поезда
-			train = select_train
-			puts "no wagons" if train.wagons.empty?
-			#Выбираем вагон
-			wagons_of_train = train.show_wagons_train
-			#train.wagons.each_with_index{|wagon, index| puts "#{index} - соответствует #{wagon.name}"}
-			wagon = select_from_list(wagons_of_train)
-			
 
-			train.delete_wagon(wagon)
-			#показываем колличество вагон в поезде
-			count_wagon_in_train(train)
+	def delete_wagon_train
+			#Выберите тип поезда
+			train = select_train 
+
+			if !train.nil?
+				#Выбираем вагон
+				if train.wagons.empty?
+					puts NOT_WAGON_AT_TRAIN
+				else
+					wagons_of_train = train.wagons.each_with_index{|wagon, index| puts "#{index} - соответствует #{wagon.name}"}
+					wagon = select_from_list(wagons_of_train)
+
+					train.delete_wagon(wagon)
+					#показываем колличество вагон в поезде
+					count_wagon_in_train(train)
+				end
+			else
+				show_menu
 		end
 	end
 
@@ -238,11 +241,11 @@ class Menu
 
 	def checking_arrs
 		if @trains.empty? && @wagons.empty?
-			puts "У вас еще не созданы вагоны и поезда"
+			puts MESSAGE_NOT_MAKE_TRAINS_AND_WAGONS
 		elsif @trains.empty?
-			puts "У вас еще не созданы поезда"
+			puts MESSAGE_NOT_MAKE_TRAINS
 		elsif @wagons.empty?
-			puts "У вас еще не созданы вагоны"
+			puts MESSAGE_NOT_MAKE_WAGONS
 		end
 	end
 
@@ -302,8 +305,9 @@ class Menu
 		@trains.each do|train| 
 			 arr << train if train.type == type
 		 end
+		 
+		 return arr #возврат массива уже отсортированного
 		 puts "Показываем поезда типа #{type}"
-		 arr #возврат массива уже отсортированного
 	end
 
 	def show_train(arr)
@@ -317,10 +321,20 @@ class Menu
 				puts NOT_SELECT
 			elsif answer == 1 then type = "passager"
 				sort_train = show_train(sort_train_by_type(type))
+					if sort_train.empty?
+						puts "у вас нет пассажирских поездов"
+					else
+				#p sort_train
 				select_from_list(sort_train)
+					end
+				#p sort_train
 			elsif answer == 2 then type = "cargo"
 				sort_train = show_train(sort_train_by_type(type))
+				if sort_train.empty?
+					puts "Увас нет грузовых поездов"
+				else
 				select_from_list(sort_train)
+				end
 			else
 					puts MISTAKE_IN_MENU
 					wagon_menu

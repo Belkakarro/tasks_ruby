@@ -7,6 +7,7 @@ class Train
 	attr_accessor :station
 	attr_accessor :route
 	attr_accessor :name
+	attr_accessor :wagons
 
 	#разрешение на чтение свойства и из других классов
 	attr_reader :type
@@ -81,10 +82,6 @@ class Train
 		@wagons.size
 	end
 
-	def show_wagons_train
-		@wagons.each_with_index{|wagon, index| puts "#{index} - соответствует вагон № #{wagon.name}"}
-
-	end
 =begin
 Эти методы используются внутри других методов, поэтому прямой доступ к ним не нужен
 =end
